@@ -1,0 +1,37 @@
+
+.root {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.typing-area {
+  position: relative;
+  overflow: hidden;
+  flex-basis: 1000px;
+
+  span {
+    display: inline;
+  }
+}
+
+.typing-text {
+  position: absolute;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.word {
+  color: #fff6;
+  white-space: nowrap;
+  &.word-correct { color: #ff0a; }
+  .sub-word-correct { color: #ff0; }
+  .sub-word-wrong { color: #f00a; }
+  .sub-word-remaining { color: #fff8; }
+}
+
+.h-center {
+  display: flex;
+  justify-content: center;
+}

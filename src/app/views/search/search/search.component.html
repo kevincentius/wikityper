@@ -1,0 +1,71 @@
+
+<div class="h-flex root" style="gap: 60px; align-items: stretch;">
+  <div class="v-flex" style="flex-basis: 0; flex-grow: 1;">
+    <div>
+      <input
+        #searchBar
+        (keydown.enter)="onSearch()"
+        [(ngModel)]="s.search"
+        class="search-bar"
+        placeholder="Search articles..."
+      />
+    </div>
+
+    <div>
+      <ng-container *ngIf="s.articles">
+        <div style="height: 30px;"></div>
+    
+        <div style="flex-grow: 1;">
+          <table class="search-result-table">
+            <tr
+              *ngFor="let article of s.articles"
+              (click)="onArticleClick(article)"
+              (mouseover)="onArticleMouseOver(article)"
+            >
+              <td class="article-title">
+                <button style="width: 100%; text-align: left;">{{article.title}}</button>
+              </td>
+    
+              <td>
+                {{article.sections.length}} 𑅀
+              </td>
+    
+              <!-- <td>
+                {{article.counts.wordCount}} ⌨W
+              </td> -->
+    
+              <td>
+                {{article.counts!.charCount}} ⌨C
+              </td>
+    
+              <!-- <td>
+                {{article.counts.letterCount}} A
+              </td> -->
+    
+              <td>
+                {{article.counts!.digitsCount}} ⑨
+              </td>
+    
+              <td>
+                {{article.counts!.punctuationCount}} '!,
+              </td>
+    
+              <td>
+                {{article.counts!.symbolsCount}} *
+              </td>
+            </tr>
+          </table>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="v-flex" style="flex-basis: 0; flex-grow: 1;">
+    <ng-container *ngIf="s.previewArticle">
+      <app-text-preview #textPreview 
+        (start)="onStartRace($event)">
+      </app-text-preview>
+    </ng-container>
+  </div>
+</div>
+

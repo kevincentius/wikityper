@@ -1,0 +1,32 @@
+
+.root {
+  padding: 40px;
+}
+
+.search-bar {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.search-result-table {
+  border: none;
+  border-collapse: collapse;
+
+  td {
+    text-align: right;
+    padding: 0 5px;
+    min-width: 100px;
+
+    &.article-title {
+      text-align: left;
+      padding-right: 60px;
+    }
+  }
+
+  tr {
+    cursor: pointer;
+    &:hover {
+      background: #fff2;
+    }
+  }
+}

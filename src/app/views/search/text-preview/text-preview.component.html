@@ -1,0 +1,22 @@
+
+<div style="height: 100%; display: flex; flex-direction: column; gap: 50px;">
+  <div>
+    <button (click)="onStartClick()">Start</button>
+    <button (click)="onPrevClick()">&lt;&lt; Prev</button>
+    <button (click)="onNextClick()">Next &gt;&gt;</button>
+  </div>
+
+  <div style="flex-grow: 1; flex-basis: 0; overflow: auto;">
+    <div>
+      Page {{this.s.selectedPage + 1}} / {{this.s.pages.length}}
+    </div>
+  
+    <div style="height: 10px"></div>
+  
+    <div>
+      <ng-container *ngIf="this.s.pages.length > 0">
+        {{this.s.pages[this.s.selectedPage].clippedText}}
+      </ng-container>
+    </div>
+  </div>
+</div>

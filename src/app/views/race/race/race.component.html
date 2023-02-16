@@ -1,0 +1,40 @@
+<div class="root">
+  <ng-container *ngIf="playerState">
+    <div style="flex-grow: 1; background: #fff1"></div>
+    <div class="h-center">
+      <div class="typing-area"
+        [style.height]="typingAreaHeight + 'px'"
+      >
+        <div class="typing-text"
+          [style.column-gap]="config.spaceWidth + 'px'"
+          [style.row-gap]="config.lineSpacing + 'px'"
+          [style.font-size]="config.fontSize + 'px'"
+          [style.top]="scrollerPos + 'px'"
+        >
+          <span
+            *ngFor="let word of playerState.doneWords"
+            #doneWordSpans
+            class="word word-correct"
+          >
+            {{word}}
+          </span>
+    
+          <span #currentWordSpan class="word">
+            <span class="sub-word-correct">{{playerState.currentWord.correctlyTyped}}</span>
+            <span class="sub-word-wrong">{{playerState.currentWord.wronglyTyped}}</span>
+            <span class="sub-word-remaining">{{playerState.currentWord.remainingLetters}}</span>
+          </span>
+    
+          <span
+            *ngFor="let word of playerState.previewWords"
+            #previewWordSpans
+            class="word"
+          >
+            {{word}}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div style="flex-grow: 1; background: #fff1"></div>
+  </ng-container>
+</div>
