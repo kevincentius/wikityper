@@ -1,11 +1,8 @@
-import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { Article } from 'src/app/model/article';
-import { SearchState } from 'src/app/model/search-state';
 import { TextPreviewState } from 'src/app/model/text-preview-state';
-import { TypePage } from 'src/app/model/type-page';
 import { config } from 'src/app/services/config';
 import { StateService } from 'src/app/services/state.service';
-import { Pos } from 'src/app/views/race/race/pos';
 import { StyleConfig } from 'src/app/views/search/search/session-config-state';
 
 @Component({

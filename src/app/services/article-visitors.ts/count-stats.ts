@@ -1,16 +1,6 @@
-import { Article, StatCounts } from "src/app/model/article";
+import { StatCounts } from "src/app/model/article";
 
-export function countStats(article: Article) {
-  article.sections.forEach(section => {
-    section.paragraphs.forEach(paragraph => {
-      paragraph.counts = countParagraphStats(paragraph.fullText);
-    });
-    section.counts = sumCounts(section.paragraphs);
-  });
-  article.counts = sumCounts(article.sections);
-}
-
-function countParagraphStats(text: string): StatCounts {
+export function countStats(text: string): StatCounts {
   return {
     wordCount: text.split(' ').length,
     charCount: text.length,

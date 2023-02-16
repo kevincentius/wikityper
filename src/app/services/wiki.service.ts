@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Article, Paragraph, Section } from 'src/app/model/article';
+import { Article } from 'src/app/model/article';
 import { WikiSearchResult } from 'src/app/model/wiki-search-result';
+import { countStats } from 'src/app/services/article-visitors.ts/count-stats';
 import { fetch } from 'wtf_wikipedia';
 
 @Injectable({
@@ -9,6 +10,12 @@ import { fetch } from 'wtf_wikipedia';
 export class WikiService {
   cachedArticles = new Map<number, Article>();
 
+  private titleBlacklist = [
+    'See also',
+    'External links',
+    'References',
+  ];
+  
   constructor() { }
 
   async search(searchQuery: string): Promise<WikiSearchResult> {
@@ -34,31 +41,20 @@ export class WikiService {
   }
   
   private asArticle(doc: any): Article {
-    const sections: Section[] = [];
-    for (const section of doc.sections()) {
-      if (section.text().trim().length < 20) continue;
+    const sentences: string[] = doc.sections()
+      .filter((section: any) => 
+        this.titleBlacklist.indexOf(section.title) == -1
+        && section.fullText.trim().length >= 20)
+      .flatMap((section: any) => (section.sentences()))
+      .flat((sentence: string) => sentence.trim())
+      .filter((sentence: string) => sentence.length > 0);
 
-      const paragraphs: Paragraph[] = section.paragraphs().map((p: any) => {
-        const fullText = p.sentences().map((s: any) => s.json().text).join(' ');
-        const paragraph: Paragraph = {
-          fullText,
-          words: fullText.split(' ').filter((word: string) => word.trim().length > 0),
-        };
-        return paragraph;
-      });
-
-      sections.push({
-        title: section.title(),
-        paragraphs: paragraphs,
-      });
-    }
-
-    const article = {
+    return {
       id: doc.pageID(),
       title: doc.title(),
-      sections,
+      sentences: sentences,
+      counts: countStats(sentences.join(' ')),
     };
-    return article;
   }
 
   async getCachedArticle(id: number): Promise<Article> {

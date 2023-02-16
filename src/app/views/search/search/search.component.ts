@@ -1,11 +1,9 @@
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Article } from 'src/app/model/article';
 import { SearchState } from 'src/app/model/search-state';
 import { TypePage } from 'src/app/model/type-page';
 import { countStats } from 'src/app/services/article-visitors.ts/count-stats';
-import { removeEmptySentences } from 'src/app/services/article-visitors.ts/remove-empty-sentences';
-import { removeSectionsByTitle } from 'src/app/services/article-visitors.ts/remove-irrelevant-sections';
 import { StateService } from 'src/app/services/state.service';
 import { WikiService } from 'src/app/services/wiki.service';
 import { TextPreviewComponent } from 'src/app/views/search/text-preview/text-preview.component';
@@ -64,20 +62,13 @@ export class SearchComponent {
       localStorage.setItem('debugCacheArticles', JSON.stringify(this.s.articles));
     }
 
-    // TODO: dont preprocess yet
-    this.s.articles.forEach(article => {
-      countStats(article);
-    });
-
     localStorage.setItem('searchState', JSON.stringify(this.s));
   }
 
   onArticleClick(rawArticle: Article) {
     const article = JSON.parse(JSON.stringify(rawArticle));
 
-    removeEmptySentences(article);
     countStats(article);
-    removeSectionsByTitle(article);
 
     this.s.previewArticle = article;
     console.log(this.textPreview);

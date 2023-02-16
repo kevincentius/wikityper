@@ -8,27 +8,9 @@ export interface StatCounts {
   symbolsCount: number;
 }
 
-export interface Sentence {
-  fullText: string;
-  words: string[];
-  counts?: StatCounts;
-}
-
-export interface Paragraph {
-  fullText: string;
-  words: string[];
-  counts?: StatCounts;
-}
-
-export interface Section {
-  title: string;
-  paragraphs: Paragraph[];
-  counts?: StatCounts;
-}
-
 export interface Article {
   id: number;
   title: string;
-  counts?: StatCounts;
-  sections: Section[];
+  counts: StatCounts;
+  sentences: string[];
 }
